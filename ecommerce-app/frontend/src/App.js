@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Products from "./components/Products";
@@ -9,32 +9,60 @@ import Wishlist from "./components/Wishlist";
 import Profile from "./components/Profile";
 import "./App.css";
 
-const App = () => {
+const API = "http://localhost:8081/api";
+
+function App() {
   const [currentView, setCurrentView] = useState("home");
-  const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [user, setUser] = useState(null); // {id, name, email, address, phone}
+  const [cart, setCart] = useState([]); // cart items from backend
+  const [wishlist, setWishlist] = useState([]); // wishlist items from backend
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  // 🔹 Authentication (mock for now)
-  const handleLogin = (email, password) => {
-    if (email && password) {
-      setUser({ email, name: email.split("@")[0] });
-      setCurrentView("home");
-      return true;
+  // load cart & wishlist & orders when user changes
+  useEffect(() => {
+    if (!user) {
+      setCart([]); setWishlist([]); setOrders([]);
+      return;
     }
-    return false;
+    // get cart
+    fetch(`${API}/cart/${user.id}`).then(r=>r.json()).then(setCart).catch(()=>setCart([]));
+    // get wishlist -> returns WishlistItem objects with productId
+    fetch(`${API}/wishlist/${user.id}`).then(r=>r.json()).then(async (list) => {
+      // fetch product details for each wishlist item
+      const prodIds = list.map(i => i.productId);
+      const prods = await fetch(`${API}/products`).then(r=>r.json());
+      const joined = list.map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
+      setWishlist(joined);
+    }).catch(()=>setWishlist([]));
+    // get orders
+    fetch(`${API}/orders/${user.id}`).then(r=>r.json()).then(setOrders).catch(()=>setOrders([]));
+  }, [user]);
+
+  // login/signup handlers interact with backend
+  const handleLogin = async (email, password) => {
+    const res = await fetch(`${API}/users/login`, {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ email, password })
+    });
+    if (!res.ok) return false;
+    const u = await res.json();
+    setUser(u);
+    setCurrentView("home");
+    return true;
   };
 
-  const handleSignup = (email, password, name, address, phone) => {
-    if (email && password && name && address && phone) {
-      setUser({ email, name, address, phone });
-      setCurrentView("home");
-      return true;
-    }
-    return false;
+  const handleSignup = async (email, password, name, address, phone) => {
+    const res = await fetch(`${API}/users/signup`, {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ email, password, name, address, phone })
+    });
+    if (!res.ok) return false;
+    const u = await res.json();
+    setUser(u);
+    setCurrentView("home");
+    return true;
   };
 
   const handleLogout = () => {
@@ -45,9 +73,24 @@ const App = () => {
     setCurrentView("home");
   };
 
+  // helper to refresh cart from backend
+  const reloadCart = async () => {
+    if (!user) return;
+    const c = await fetch(`${API}/cart/${user.id}`).then(r=>r.json());
+    setCart(c);
+  };
+
+  // helper to refresh wishlist
+  const reloadWishlist = async () => {
+    if (!user) return;
+    const list = await fetch(`${API}/wishlist/${user.id}`).then(r=>r.json());
+    const prods = await fetch(`${API}/products`).then(r=>r.json());
+    const joined = list.map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
+    setWishlist(joined);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header always visible */}
+    <div>
       <Header
         currentView={currentView}
         setCurrentView={setCurrentView}
@@ -59,11 +102,10 @@ const App = () => {
         setSearchQuery={setSearchQuery}
       />
 
-      {/* Views */}
       {currentView === "home" && <Home setCurrentView={setCurrentView} />}
-
       {currentView === "products" && (
         <Products
+          user={user}
           cart={cart}
           setCart={setCart}
           wishlist={wishlist}
@@ -71,38 +113,23 @@ const App = () => {
           searchQuery={searchQuery}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          reloadCart={reloadCart}
+          reloadWishlist={reloadWishlist}
         />
       )}
-
       {currentView === "cart" && (
-        <Cart
-          cart={cart}
-          setCart={setCart}
-          user={user}
-          setOrders={setOrders}
-          setCurrentView={setCurrentView}
-        />
+        <Cart user={user} cart={cart} reloadCart={reloadCart} setCurrentView={setCurrentView} />
       )}
-
       {currentView === "login" && (
         <Login handleLogin={handleLogin} handleSignup={handleSignup} />
       )}
-
       {currentView === "orders" && user && <Orders orders={orders} />}
-
       {currentView === "wishlist" && (
-        <Wishlist
-          wishlist={wishlist}
-          setWishlist={setWishlist}
-          setCart={setCart}
-        />
+        <Wishlist wishlist={wishlist} setWishlist={setWishlist} setCart={setCart} user={user} reloadWishlist={reloadWishlist} reloadCart={reloadCart} />
       )}
-
-      {currentView === "profile" && user && (
-        <Profile user={user} setUser={setUser} />
-      )}
+      {currentView === "profile" && user && <Profile user={user} setUser={setUser} />}
     </div>
   );
-};
+}
 
 export default App;

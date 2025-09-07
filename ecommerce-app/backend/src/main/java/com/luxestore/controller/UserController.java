@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
   private final UserRepository repo;
   public UserController(UserRepository repo) { this.repo = repo; }
@@ -35,10 +35,6 @@ public class UserController {
 
   @GetMapping("/{id}")
   public User get(@PathVariable Long id) {
-    //exception handling can be improved
-    if (!repo.existsById(id)) throw new RuntimeException("User not found");
-    else
-      return repo.findById(id).orElseThrow();
-    
+        return repo.findById(id).orElseThrow();
   }
 }

@@ -14,3 +14,4 @@ com\luxestore\model\WishlistItem.class
 com\luxestore\controller\CartController.class
 com\luxestore\model\OrderEntity.class
 com\luxestore\repository\UserRepository.class
+com\luxestore\WebConfig.class
