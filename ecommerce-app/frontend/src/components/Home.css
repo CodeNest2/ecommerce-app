@@ -1,0 +1,9 @@
+.home {
+  background: linear-gradient(to right, #6b21a8, #2563eb);
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+.home h2 { font-size: 48px; margin-bottom: 20px; }
+.home p { font-size: 20px; margin-bottom: 30px; }
+.home button { background: white; color: #6b21a8; padding: 12px 30px; border-radius: 6px; font-weight: bold; }

@@ -1,0 +1,16 @@
+com\luxestore\controller\OrderController.class
+com\luxestore\repository\CartRepository.class
+com\luxestore\repository\ProductRepository.class
+com\luxestore\repository\WishlistRepository.class
+com\luxestore\controller\WishlistController.class
+com\luxestore\controller\ProductController.class
+com\luxestore\controller\UserController.class
+com\luxestore\EcommerceApplication.class
+com\luxestore\model\User.class
+com\luxestore\model\CartItem.class
+com\luxestore\repository\OrderRepository.class
+com\luxestore\model\Product.class
+com\luxestore\model\WishlistItem.class
+com\luxestore\controller\CartController.class
+com\luxestore\model\OrderEntity.class
+com\luxestore\repository\UserRepository.class

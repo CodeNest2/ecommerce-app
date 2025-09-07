@@ -1,0 +1,5 @@
+.orders { max-width: 900px; margin: auto; padding: 40px 20px; }
+.order-card { background: white; padding: 20px; margin-bottom: 16px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.order-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; }
+.order-items { border-top: 1px solid #eee; margin-top: 10px; padding-top: 10px; }
+.order-total { margin-top: 10px; font-weight: bold; color: #6b21a8; }

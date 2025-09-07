@@ -1,0 +1,6 @@
+.cart { max-width: 800px; margin: auto; padding: 40px 20px; }
+.cart h2 { margin-bottom: 20px; }
+.cart-item { display: flex; align-items: center; border-bottom: 1px solid #eee; padding: 12px 0; }
+.cart-item img { width: 70px; height: 70px; border-radius: 6px; margin-right: 16px; }
+.cart-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.checkout-btn { background: #6b21a8; color: white; padding: 10px 20px; border-radius: 6px; margin-top: 20px; width: 100%; }

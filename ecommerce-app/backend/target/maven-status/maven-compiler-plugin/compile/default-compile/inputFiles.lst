@@ -1,0 +1,16 @@
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\controller\CartController.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\controller\OrderController.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\controller\ProductController.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\controller\UserController.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\controller\WishlistController.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\EcommerceApplication.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\model\CartItem.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\model\OrderEntity.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\model\Product.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\model\User.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\model\WishlistItem.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\repository\CartRepository.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\repository\OrderRepository.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\repository\ProductRepository.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\repository\UserRepository.java
+C:\Users\HP\Downloads\ecommerce-project\ecommerce-app\backend\src\main\java\com\luxestore\repository\WishlistRepository.java

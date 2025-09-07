@@ -1,0 +1,49 @@
+.profile {
+  max-width: 600px;
+  margin: auto;
+  padding: 40px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.profile h2 {
+  margin-bottom: 20px;
+  color: #6b21a8;
+}
+
+.profile-details p {
+  margin: 10px 0;
+}
+
+.profile-details button {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background: #6b21a8;
+  color: white;
+  border-radius: 6px;
+}
+
+.profile-edit input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.profile-edit button {
+  padding: 10px 16px;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+
+.profile-edit button:first-child {
+  background: #6b21a8;
+  color: white;
+}
+
+.profile-edit .cancel {
+  background: #aaa;
+  color: white;
+}
