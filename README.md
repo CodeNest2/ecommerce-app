@@ -49,7 +49,7 @@ http://localhost:3000
 POST MAN Collection
 
 ```
-/api/users/signup
+POST /api/users/signup
 
 
 {
@@ -60,5 +60,26 @@ POST MAN Collection
   "phone": "9999999999"
 }
 ```
+```
+POST /api/users/login
 
+{
+  "email": "test@example.com",
+  "password": "test123"
+}
+```
+
+```
+GET /api/users/{id}
+```
+
+```
+PUT /api/users/{id}
+
+{
+  "name": "Updated Name",
+  "address": "New Address",
+  "phone": "8888888888"
+}
+```
 
