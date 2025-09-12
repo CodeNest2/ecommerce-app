@@ -34,3 +34,31 @@ mvn clean spring-boot:run
 Server will run in
 http://localhost:8081
 
+## Front End
+cd ecommerce-app/frontend
+
+## Install Dependencies
+npm install
+
+## Start Development Server
+npm start
+
+#Open APP 
+http://localhost:3000
+
+POST MAN Collection
+
+```
+/api/users/signup
+
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "test123",
+  "address": "Mumbai",
+  "phone": "9999999999"
+}
+```
+
+
