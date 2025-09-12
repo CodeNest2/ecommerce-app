@@ -46,7 +46,7 @@ npm start
 #Open APP 
 http://localhost:3000
 
-POST MAN Collection
+## POST MAN Collection
 
 ```
 POST /api/users/signup
