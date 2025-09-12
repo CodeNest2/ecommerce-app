@@ -26,6 +26,11 @@ npm -v
 
 cd ecommerce-app/backend
 
-mvn clean package
+# mvn clean package
 java -jar target/backend-1.0.0.jar
+
+mvn clean spring-boot:run 
+
+Server will run in
+http://localhost:8081
 
