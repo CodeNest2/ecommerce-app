@@ -8,8 +8,29 @@ button {
   cursor: pointer;
 }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Ensure inner sections have some overlay */
+.app-container > *:not(.footer) {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.footer {
+  background: linear-gradient(90deg, #4b0082, #1e90ff);
+  color: white;
+  text-align: center;
   padding: 20px;
+  margin-top: auto;
+}
+
+.footer-content p {
+  margin: 5px 0;
+  font-size: 14px;
 }

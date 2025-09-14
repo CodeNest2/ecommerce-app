@@ -1,9 +1,46 @@
 .home {
-  background: linear-gradient(to right, #6b21a8, #2563eb);
-  color: white;
+  position: relative;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 80px 20px;
+  color: white;
+
+  /* Transparent blue gradient overlay + background image */
+  background: linear-gradient(
+      rgba(59, 130, 246, 0.6),   /* blue overlay top */
+      rgba(59, 130, 246, 0.6)    /* blue overlay bottom */
+    ),
+    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80")
+      no-repeat center center;
+  background-size: cover;
 }
-.home h2 { font-size: 48px; margin-bottom: 20px; }
-.home p { font-size: 20px; margin-bottom: 30px; }
-.home button { background: white; color: #6b21a8; padding: 12px 30px; border-radius: 6px; font-weight: bold; }
+
+.home h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.home p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.home button {
+  background-color: white;
+  color: #2563eb;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.home button:hover {
+  background-color: #f1f5f9;
+}

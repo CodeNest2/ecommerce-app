@@ -30,10 +30,8 @@ public class CartController {
   }
 
   @PutMapping("/{id}")
-  public CartItem update(@PathVariable Long id, @RequestParam int qty) {
-    CartItem c = repo.findById(id).orElseThrow();
-    c.setQuantity(qty);
-    return repo.save(c);
+  public int update(@PathVariable Long id, @RequestParam int qty) {
+    return repo.updateQuantityById(id, qty);
   }
 
   @DeleteMapping("/{userId}/{productId}")

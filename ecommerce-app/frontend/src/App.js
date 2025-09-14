@@ -36,9 +36,19 @@ function App() {
       const joined = list.map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
       setWishlist(joined);
     }).catch(()=>setWishlist([]));
-    // get orders
-    fetch(`${API}/orders/${user.id}`).then(r=>r.json()).then(setOrders).catch(()=>setOrders([]));
+    // get orders 
+      fetch(`${API}/cart/${user.id}`)
+    .then(res => res.ok ? res.json() : Promise.reject(`Cart fetch failed ${res.status}`))
+    .then(setCart)
+    .catch(err => {
+      console.error("Failed to load cart:", err);
+      setCart([]);
+    
+  });
   }, [user]);
+
+
+
 
   // login/signup handlers interact with backend
   const handleLogin = async (email, password) => {
@@ -90,7 +100,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <Header
         currentView={currentView}
         setCurrentView={setCurrentView}
@@ -123,11 +133,31 @@ function App() {
       {currentView === "login" && (
         <Login handleLogin={handleLogin} handleSignup={handleSignup} />
       )}
-      {currentView === "orders" && user && <Orders orders={orders} />}
+
+      {currentView === "orders" && user && (
+        <Orders orders={orders} setCurrentView={setCurrentView} />
+        )}
+      
       {currentView === "wishlist" && (
-        <Wishlist wishlist={wishlist} setWishlist={setWishlist} setCart={setCart} user={user} reloadWishlist={reloadWishlist} reloadCart={reloadCart} />
+        <Wishlist
+          wishlist={wishlist}
+          setWishlist={setWishlist}
+          setCart={setCart}
+          user={user}
+          reloadWishlist={reloadWishlist}
+          reloadCart={reloadCart}
+        />
       )}
       {currentView === "profile" && user && <Profile user={user} setUser={setUser} />}
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <p>📍 LuxeStore, Banjara Hills, Hyderabad, India</p>
+          <p>📧 support@luxestore.com | ☎ +91-8501832044, +91-7207192618</p>
+          <p>© {new Date().getFullYear()} LuxeStore. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
