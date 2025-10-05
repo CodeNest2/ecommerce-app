@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig {
@@ -26,10 +27,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/signup"),
+                                 new AntPathRequestMatcher("/api/auth/login")).permitAll()
+                //.requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
+                .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/products/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/cart/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/wishlist/**")).permitAll()
                 .anyRequest().authenticated()
             )
+            .headers(headers -> headers.frameOptions().disable())
             .httpBasic();
         return http.build();
     }

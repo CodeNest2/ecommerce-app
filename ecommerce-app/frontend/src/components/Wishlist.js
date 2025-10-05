@@ -33,7 +33,7 @@ const Wishlist = ({ wishlist, setWishlist, setCart, user, reloadWishlist, reload
               <div key={w.id} className="wishlist-card">
                 <img src={p.image} alt={p.name} />
                 <h3>{p.name}</h3>
-                <p>${p.price}</p>
+                <p>₹{p.price}</p>
                 <div className="wishlist-actions">
                   <button onClick={()=>moveToCart(p)}>Move to Cart</button>
                   <button onClick={()=>removeFromWishlist(p)}>Remove</button>

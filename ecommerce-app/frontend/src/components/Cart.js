@@ -48,7 +48,7 @@ const Cart = ({ user, cart: propCart, reloadCart, setCurrentView }) => {
               <img src={item.product?.image} alt={item.product?.name} />
               <div>
                 <h3>{item.product?.name}</h3>
-                <p>${item.product?.price}</p>
+                <p>₹{item.product?.price}</p>
               </div>
               <div className="cart-actions">
                 <button onClick={()=>changeQty(item.productId, item.quantity - 1)}><Minus/></button>
