@@ -16,3 +16,6 @@ spring:
       mode: never # Disables execution of schema.sql and data.sql
 server:
   port: 8081
+stripe:
+  apiKey: 123456789999000000000000000000
+ 

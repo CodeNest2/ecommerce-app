@@ -9,7 +9,13 @@ import Wishlist from "./components/Wishlist";
 import Profile from "./components/Profile";
 import "./App.css";
 
+// ✅ Stripe imports
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Checkout from "./components/Checkout"; 
+
 const API = "http://localhost:8081/api";
+const stripePromise = loadStripe("pk_test_YourPublishableKeyHere"); // your publishable key
 
 function App() {
   const [currentView, setCurrentView] = useState("home");
@@ -30,25 +36,19 @@ function App() {
     fetch(`${API}/cart/${user.id}`).then(r=>r.json()).then(setCart).catch(()=>setCart([]));
     // get wishlist -> returns WishlistItem objects with productId
     fetch(`${API}/wishlist/${user.id}`).then(r=>r.json()).then(async (list) => {
-      // fetch product details for each wishlist item
-      const prodIds = list.map(i => i.productId);
       const prods = await fetch(`${API}/products`).then(r=>r.json());
       const joined = list.map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
       setWishlist(joined);
     }).catch(()=>setWishlist([]));
     // get orders 
-      fetch(`${API}/cart/${user.id}`)
-    .then(res => res.ok ? res.json() : Promise.reject(`Cart fetch failed ${res.status}`))
-    .then(setCart)
-    .catch(err => {
-      console.error("Failed to load cart:", err);
-      setCart([]);
-    
-  });
+    fetch(`${API}/cart/${user.id}`)
+      .then(res => res.ok ? res.json() : Promise.reject(`Cart fetch failed ${res.status}`))
+      .then(setCart)
+      .catch(err => {
+        console.error("Failed to load cart:", err);
+        setCart([]);
+      });
   }, [user]);
-
-
-
 
   // login/signup handlers interact with backend
   const handleLogin = async (email, password) => {
@@ -130,14 +130,20 @@ function App() {
       {currentView === "cart" && (
         <Cart user={user} cart={cart} reloadCart={reloadCart} setCurrentView={setCurrentView} />
       )}
+
+      {/* ✅ Checkout view */}
+      {currentView === "checkout" && (
+        <Elements stripe={stripePromise}>
+          <Checkout user={user} cart={cart} setCurrentView={setCurrentView} />
+        </Elements>
+      )}
+
       {currentView === "login" && (
         <Login handleLogin={handleLogin} handleSignup={handleSignup} />
       )}
-
       {currentView === "orders" && user && (
         <Orders orders={orders} setCurrentView={setCurrentView} />
-        )}
-      
+      )}
       {currentView === "wishlist" && (
         <Wishlist
           wishlist={wishlist}
