@@ -9,22 +9,29 @@ import java.util.List;
 @RequestMapping("/api/wishlist")
 @CrossOrigin(origins = "http://localhost:3000")
 public class WishlistController {
-  private final WishlistRepository repo;
-  public WishlistController(WishlistRepository repo) { this.repo = repo; }
+	private final WishlistRepository repo;
 
-  @GetMapping("/{userId}")
-  public List<WishlistItem> get(@PathVariable Long userId) { return repo.findByUserId(userId); }
+	public WishlistController(WishlistRepository repo) {
+		this.repo = repo;
+	}
 
-  @PostMapping
-  public WishlistItem add(@RequestBody WishlistItem item) { return repo.save(item); }
+	@GetMapping("/{userId}")
+	public List<WishlistItem> get(@PathVariable Long userId) {
+		return repo.findByUserId(userId);
+	}
 
-  @DeleteMapping("/{userId}/{productId}")
-  public void remove(@PathVariable Long userId, @PathVariable Long productId) {
-    repo.deleteByUserIdAndProductId(userId, productId);
-  }
+	@PostMapping
+	public WishlistItem add(@RequestBody WishlistItem item) {
+		return repo.save(item);
+	}
 
-  @GetMapping("/exists/{userId}/{productId}")
-  public boolean exists(@PathVariable Long userId, @PathVariable Long productId) {
-    return repo.findByUserIdAndProductId(userId, productId).isPresent();
-  }
+	@DeleteMapping("/{userId}/{productId}")
+	public void remove(@PathVariable Long userId, @PathVariable Long productId) {
+		repo.deleteByUserIdAndProductId(userId, productId);
+	}
+
+	@GetMapping("/exists/{userId}/{productId}")
+	public boolean exists(@PathVariable Long userId, @PathVariable Long productId) {
+		return repo.findByUserIdAndProductId(userId, productId).isPresent();
+	}
 }

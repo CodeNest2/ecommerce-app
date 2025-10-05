@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/api/users/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/orders/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/payment/**")).permitAll()
+
                 .anyRequest().authenticated()
             )
             .headers(headers -> headers.frameOptions().disable())
