@@ -11,23 +11,23 @@ button {
 .app-container {
   min-height: 100vh;
   display: flex;
+  
   flex-direction: column;
-  background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80")
+  background: url("https://cdn0.weddingwire.in/article/7599/3_2/1920/jpg/19957-designer-lehenga-choli-by-manish-malhotra-manishmalhotra05-fashionshow.jpeg")
     no-repeat center center fixed;
-  background-size: cover;
+ 
 }
 
 /* Ensure inner sections have some overlay */
-.app-container > *:not(.footer) {
-  background-color: rgba(255, 255, 255, 0.9);
-}
+
 
 .footer {
-  background: linear-gradient(90deg, #4b0082, #1e90ff);
-  color: white;
+  background-color: black;
+  color: antiquewhite;
   text-align: center;
   padding: 20px;
   margin-top: auto;
+  font-weight: 100;
 }
 
 .footer-content p {

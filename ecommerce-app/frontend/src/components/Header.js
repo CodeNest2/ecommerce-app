@@ -32,14 +32,14 @@ const Header = ({ currentView, setCurrentView, user, cart, wishlist, handleLogou
 
           {/* Wishlist */}
           <button className="wishlist-icon" onClick={() => setCurrentView("wishlist")}>
-            <Heart color="red" fill="red" />
+            <Heart color="black" fill="antiquewhite" />
             {wishlist.length > 0 && <span className="wishlist-count">{wishlist.length}</span>}
           </button>
 
           {/* User */}
           {user ? (
             <div className="user-menu">
-              <button className="user-btn"><User color="#6b21a8" /> {user.name}</button>
+              <button className="user-btn"><User color="black" /> {user.name}</button>
               <div className="dropdown">
                 <button onClick={() => setCurrentView("profile")}>☰ Profile</button>
                 <button onClick={handleLogout}>Logout</button>

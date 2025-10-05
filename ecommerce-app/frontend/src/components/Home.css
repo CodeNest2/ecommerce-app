@@ -6,16 +6,15 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: white;
+  color: rgba(245, 245, 241, 0.764);
 
   /* Transparent blue gradient overlay + background image */
   background: linear-gradient(
       rgba(59, 130, 246, 0.6),   /* blue overlay top */
       rgba(59, 130, 246, 0.6)    /* blue overlay bottom */
     ),
-    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80")
-      no-repeat center center;
-  background-size: cover;
+   
+ 
 }
 
 .home h2 {
@@ -30,8 +29,8 @@
 }
 
 .home button {
-  background-color: white;
-  color: #2563eb;
+  background-color:antiquewhite;
+  color: #140117;
   padding: 12px 30px;
   border: none;
   border-radius: 8px;

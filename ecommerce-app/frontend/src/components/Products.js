@@ -112,11 +112,7 @@ const Products = ({ user, cart, setCart, wishlist = [], setWishlist = () => {}, 
 
           <h3>{p.name}</h3>
           <p className="price">₹{p.price}</p>
-          <div className="rating">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className={i < Math.floor(p.rating || 4) ? 'star-filled' : 'star-empty'} />
-            ))}
-          </div>
+         
           <button className="add-btn" onClick={() => addToCartBackend(p)}>Add to Cart</button>
         </div>
       ))}

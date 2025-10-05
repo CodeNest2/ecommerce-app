@@ -8,7 +8,7 @@
 }
 
 .product-card {
-  background: white;
+  background: antiquewhite;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -24,7 +24,7 @@
 }
 .product-card img {
   width: 100%;
-  height: 200px;
+  height: 350px;
   object-fit: cover;
   border-radius: 6px;
 }
@@ -45,12 +45,12 @@
   background: #f3f3f3;
 }
 .wishlist-heart.active svg {
-  fill: red;
-  stroke: red;
+  fill: rgb(120, 4, 4);
+  stroke: antiquewhite;
 }
 
 .price {
-  color: #6b21a8;
+  color: #090110;
   font-weight: bold;
   margin: 6px 0;
 }
@@ -59,14 +59,14 @@
   gap: 2px;
 }
 .star-filled {
-  color: gold;
+  color: rgba(22, 22, 1, 0.653);
 }
 .star-empty {
   color: #ddd;
 }
 .add-btn {
   margin-top: 10px;
-  background: #6b21a8;
+  background: black;
   color: white;
   padding: 8px 14px;
   border-radius: 6px;
