@@ -14,6 +14,7 @@ com\luxestore\security\JwtUtils.class
 com\luxestore\model\Product.class
 com\luxestore\model\WishlistItem.class
 com\luxestore\security\SecurityConfig.class
+com\luxestore\controller\PaymentController.class
 com\luxestore\controller\CartController.class
 com\luxestore\model\OrderEntity.class
 com\luxestore\repository\UserRepository.class

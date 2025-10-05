@@ -2,15 +2,23 @@ package com.luxestore.controller;
 
 import com.luxestore.model.CartItem;
 import com.luxestore.repository.CartRepository;
+
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
+import com.luxestore.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/api/cart")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CartController {
   private final CartRepository repo;
-  public CartController(CartRepository repo) { this.repo = repo; }
+  private final ProductRepository productRepo;
+  public CartController(CartRepository repo, ProductRepository productRepo) {
+    this.repo = repo;
+    this.productRepo = productRepo;
+  }
 
   @GetMapping("/{userId}")
   public List<CartItem> getForUser(@PathVariable Long userId) {
