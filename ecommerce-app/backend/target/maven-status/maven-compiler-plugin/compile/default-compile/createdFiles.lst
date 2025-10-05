@@ -1,6 +1,7 @@
 com\luxestore\controller\OrderController.class
 com\luxestore\repository\CartRepository.class
 com\luxestore\repository\ProductRepository.class
+com\luxestore\controller\AuthController.class
 com\luxestore\repository\WishlistRepository.class
 com\luxestore\controller\WishlistController.class
 com\luxestore\controller\ProductController.class
@@ -9,9 +10,12 @@ com\luxestore\EcommerceApplication.class
 com\luxestore\model\User.class
 com\luxestore\model\CartItem.class
 com\luxestore\repository\OrderRepository.class
+com\luxestore\security\JwtUtils.class
 com\luxestore\model\Product.class
 com\luxestore\model\WishlistItem.class
+com\luxestore\security\SecurityConfig.class
 com\luxestore\controller\CartController.class
 com\luxestore\model\OrderEntity.class
 com\luxestore\repository\UserRepository.class
+com\luxestore\service\CustomUserDetailsService.class
 com\luxestore\WebConfig.class

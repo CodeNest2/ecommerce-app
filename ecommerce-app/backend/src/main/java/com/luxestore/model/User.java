@@ -1,5 +1,7 @@
 package com.luxestore.model;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,10 @@ public class User {
   private String address;
   private String phone;
 
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+  private Set<String> roles;
+
   // Getters and setters
   public Long getId() { return id; }
   public void setId(Long id) { this.id = id; }
@@ -28,4 +34,11 @@ public class User {
   public void setAddress(String address) { this.address = address; }
   public String getPhone() { return phone; }
   public void setPhone(String phone) { this.phone = phone; }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
 }
