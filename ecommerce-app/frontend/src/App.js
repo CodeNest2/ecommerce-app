@@ -15,7 +15,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Checkout from "./components/Checkout"; 
 
 const API = "http://localhost:8081/api";
-const stripePromise = loadStripe("pk_test_YourPublishableKeyHere"); // your publishable key
+const stripePromise = loadStripe("dummy"); // your publishable key
 
 function App() {
   const [currentView, setCurrentView] = useState("home");
