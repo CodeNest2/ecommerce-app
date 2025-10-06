@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-/* .checkout-container {
-  max-width: 450px;
-  margin: 50px auto;
-  padding: 30px 40px;
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-=======
-/* Checkout.css */
 
 /* Full screen overlay */
 .checkout-overlay {
@@ -38,13 +27,12 @@
 
 .checkout-container:hover {
   transform: translateY(-5px);
->>>>>>> 850a326cb38f13c9d97bd2176d5ac18391e5b966
 }
 
 .checkout-container h2 {
   text-align: center;
   margin-bottom: 25px;
-<<<<<<< HEAD
+
 }
 
 .amount-input, .card-element {
@@ -65,9 +53,7 @@ button {
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-=======
-  font-size: 26px;
-  color: #333;
+ 
 }
 
 form {
@@ -97,17 +83,11 @@ button {
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
->>>>>>> 850a326cb38f13c9d97bd2176d5ac18391e5b966
+
 }
 
 button:hover {
   background-color: #5469d4;
-<<<<<<< HEAD
-}
-
-/* Popup Styles */
-=======
-  transform: translateY(-2px);
 }
 
 button:disabled {
@@ -159,4 +139,4 @@ p {
 }
 
 }
->>>>>>> 850a326cb38f13c9d97bd2176d5ac18391e5b966
+
