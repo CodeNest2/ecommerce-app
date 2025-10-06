@@ -9,13 +9,13 @@ import Wishlist from "./components/Wishlist";
 import Profile from "./components/Profile";
 import "./App.css";
 
-// ✅ Stripe imports
+// ✅ Stripe
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Checkout from "./components/Checkout"; 
+import Checkout from "./components/Checkout";
 
 const API = "http://localhost:8081/api";
-const stripePromise = loadStripe("dummy"); // your publishable key
+const stripePromise = loadStripe("pk_test_YourPublishableKeyHere"); // your publishable key
 
 function App() {
   const [currentView, setCurrentView] = useState("home");
@@ -32,22 +32,26 @@ function App() {
       setCart([]); setWishlist([]); setOrders([]);
       return;
     }
-    // get cart
+    // cart
     fetch(`${API}/cart/${user.id}`).then(r=>r.json()).then(setCart).catch(()=>setCart([]));
-    // get wishlist -> returns WishlistItem objects with productId
+    // wishlist
     fetch(`${API}/wishlist/${user.id}`).then(r=>r.json()).then(async (list) => {
       const prods = await fetch(`${API}/products`).then(r=>r.json());
       const joined = list.map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
       setWishlist(joined);
     }).catch(()=>setWishlist([]));
-    // get orders 
+    // (your original duplicated cart fetch kept as-is)
     fetch(`${API}/cart/${user.id}`)
       .then(res => res.ok ? res.json() : Promise.reject(`Cart fetch failed ${res.status}`))
       .then(setCart)
-      .catch(err => {
-        console.error("Failed to load cart:", err);
-        setCart([]);
-      });
+      .catch(err => { console.error("Failed to load cart:", err); setCart([]); });
+
+    // ✅ fetch orders
+    fetch(`${API}/orders/${user.id}`)
+      .then(res => res.ok ? res.json() : Promise.reject(`Orders fetch failed ${res.status}`))
+      .then((o) => setOrders(Array.isArray(o) ? o : []))
+      .catch(err => { console.error("Failed to load orders:", err); setOrders([]); });
+
   }, [user]);
 
   // login/signup handlers interact with backend
@@ -77,26 +81,35 @@ function App() {
 
   const handleLogout = () => {
     setUser(null);
-    setCart([]);
-    setWishlist([]);
-    setOrders([]);
+    setCart([]); setWishlist([]); setOrders([]);
     setCurrentView("home");
   };
 
   // helper to refresh cart from backend
   const reloadCart = async () => {
     if (!user) return;
-    const c = await fetch(`${API}/cart/${user.id}`).then(r=>r.json());
-    setCart(c);
+    const c = await fetch(`${API}/cart/${user.id}`).then(r=>r.json()).catch(()=>[]);
+    setCart(Array.isArray(c) ? c : []);
   };
 
   // helper to refresh wishlist
   const reloadWishlist = async () => {
     if (!user) return;
-    const list = await fetch(`${API}/wishlist/${user.id}`).then(r=>r.json());
-    const prods = await fetch(`${API}/products`).then(r=>r.json());
-    const joined = list.map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
+    const list = await fetch(`${API}/wishlist/${user.id}`).then(r=>r.json()).catch(()=>[]);
+    const prods = await fetch(`${API}/products`).then(r=>r.json()).catch(()=>[]);
+    const joined = (list || []).map(wi => ({ id: wi.id, product: prods.find(p=>p.id === wi.productId) }));
     setWishlist(joined);
+  };
+
+  // ✅ helper to refresh orders after payment
+  const reloadOrders = async () => {
+    if (!user) return;
+    try {
+      const o = await fetch(`${API}/orders/${user.id}`).then(r => r.json());
+      setOrders(Array.isArray(o) ? o : []);
+    } catch {
+      setOrders([]);
+    }
   };
 
   return (
@@ -113,6 +126,7 @@ function App() {
       />
 
       {currentView === "home" && <Home setCurrentView={setCurrentView} />}
+
       {currentView === "products" && (
         <Products
           user={user}
@@ -127,6 +141,7 @@ function App() {
           reloadWishlist={reloadWishlist}
         />
       )}
+
       {currentView === "cart" && (
         <Cart user={user} cart={cart} reloadCart={reloadCart} setCurrentView={setCurrentView} />
       )}
@@ -134,16 +149,24 @@ function App() {
       {/* ✅ Checkout view */}
       {currentView === "checkout" && (
         <Elements stripe={stripePromise}>
-          <Checkout user={user} cart={cart} setCurrentView={setCurrentView} />
+          <Checkout
+            user={user}
+            cart={cart}
+            setCurrentView={setCurrentView}
+            reloadCart={reloadCart}      // allow clearing/refreshing cart after payment
+            reloadOrders={reloadOrders}  // allow refreshing orders after payment
+          />
         </Elements>
       )}
 
       {currentView === "login" && (
         <Login handleLogin={handleLogin} handleSignup={handleSignup} />
       )}
+
       {currentView === "orders" && user && (
-        <Orders orders={orders} setCurrentView={setCurrentView} />
+        <Orders orders={orders} user={user} setCurrentView={setCurrentView} />
       )}
+
       {currentView === "wishlist" && (
         <Wishlist
           wishlist={wishlist}
@@ -154,6 +177,7 @@ function App() {
           reloadCart={reloadCart}
         />
       )}
+
       {currentView === "profile" && user && <Profile user={user} setUser={setUser} />}
 
       {/* Footer */}
