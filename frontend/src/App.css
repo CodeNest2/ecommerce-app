@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  
+  flex-direction: column;
+  background: url("https://cdn0.weddingwire.in/article/7599/3_2/1920/jpg/19957-designer-lehenga-choli-by-manish-malhotra-manishmalhotra05-fashionshow.jpeg")
+    no-repeat center center fixed;
+ 
+}
+
+/* Ensure inner sections have some overlay */
+
+
+.footer {
+  background-color: black;
+  color: antiquewhite;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  font-weight: 100;
+}
+
+.footer-content p {
+  margin: 5px 0;
+  font-size: 14px;
+}

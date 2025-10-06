@@ -1,0 +1,45 @@
+.home {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(245, 245, 241, 0.764);
+
+  /* Transparent blue gradient overlay + background image */
+  background: linear-gradient(
+      rgba(59, 130, 246, 0.6),   /* blue overlay top */
+      rgba(59, 130, 246, 0.6)    /* blue overlay bottom */
+    ),
+   
+ 
+}
+
+.home h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.home p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.home button {
+  background-color:antiquewhite;
+  color: #140117;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.home button:hover {
+  background-color: #f1f5f9;
+}
