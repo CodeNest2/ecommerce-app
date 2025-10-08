@@ -24,7 +24,7 @@ public class PaymentController {
 //Hello just checking if git is working or not.
     @PostMapping("/create-payment-intent")
     public Map<String, Object> createPaymentIntent(@RequestBody Map<String, Object> request) throws Exception {
-        Stripe.apiKey = "dummyKey";
+        //Stripe.apiKey = "dummyKey";
 
         long amount = Long.parseLong(request.get("amount").toString()); // in cents
 
