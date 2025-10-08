@@ -3,4 +3,4 @@
 .login-box h2 { text-align: center; margin-bottom: 20px; }
 .login-box input { width: 100%; margin-bottom: 12px; padding: 10px; border-radius: 4px; border: 1px solid black; }
 .login-box button { width: 100%; background: black; color: white; padding: 4px; border-radius: 6px; }
-.toggle { text-align: center; margin-top: 10px; cursor: pointer; color: antiquewhite; }
+.toggle { text-align: center; margin-top: 10px; cursor: pointer; color: black; }
