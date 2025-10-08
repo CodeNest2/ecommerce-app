@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
+import "./Orders.css";
 
 const API = "http://localhost:8081/api";
 
-const Orders = ({ orders: propOrders = [], user, setCurrentView }) => {
+const Orders = ({ orders: propOrders = [], user, setCurrentView, dark = false }) => {
   const [orders, setOrders] = useState(Array.isArray(propOrders) ? propOrders : []);
   const [productsById, setProductsById] = useState({});
   const [loading, setLoading] = useState(false);
@@ -29,8 +30,11 @@ const Orders = ({ orders: propOrders = [], user, setCurrentView }) => {
         if (!cancelled) setLoading(false);
       }
     })();
-    return () => { cancelled = true; };
-  }, [user]); // eslint-disable-line
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   // get product catalog once for join
   useEffect(() => {
@@ -47,9 +51,12 @@ const Orders = ({ orders: propOrders = [], user, setCurrentView }) => {
         setProductsById({});
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
+  // ---- utils ----
   const parsePriceMajor = (val) => {
     if (val == null) return 0;
     if (typeof val === "number" && !Number.isNaN(val)) return val;
@@ -59,86 +66,137 @@ const Orders = ({ orders: propOrders = [], user, setCurrentView }) => {
   };
   const looksLikeMinorUnits = (n) => Number.isInteger(n) && n >= 1000;
 
+  const money = (n) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 2,
+    }).format(n || 0);
+
+  const formatDate = (d) =>
+    d ? new Date(d).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "";
+
+  const badgeKind = (status = "") => {
+    const s = String(status).toLowerCase();
+    if (s.includes("paid") || s.includes("delivered") || s.includes("completed")) return "paid";
+    if (s.includes("pending") || s.includes("processing") || s.includes("in progress")) return "pending";
+    if (s.includes("failed") || s.includes("canceled") || s.includes("cancelled")) return "failed";
+    return "";
+  };
+
+  // ---- normalize orders structure to match UI ----
   const normalized = useMemo(() => {
     return (orders || []).map((o) => {
       let items = [];
-      try { items = JSON.parse(o.itemsJson || "[]"); } catch {}
+      try {
+        // Backend may send an items array or json string
+        if (Array.isArray(o.items)) items = o.items;
+        else items = JSON.parse(o.itemsJson || o.items || "[]");
+      } catch {
+        items = [];
+      }
 
-      const joined = items.map((it) => {
-        const pid = it.productId;
-        const p = productsById[pid] || {};
-        let unit = parsePriceMajor(it.price);
-        if (!unit || unit === 0) unit = parsePriceMajor(p.price);
-        if (looksLikeMinorUnits(unit)) unit = unit / 100;
+      const joined = items.map((it, idx) => {
+        const pid = it.productId ?? it.id ?? it.product_id;
+        const p = (pid && productsById[pid]) || {};
 
-        const qty = Number(it.quantity) || 0;
+        let unit = parsePriceMajor(it.price ?? it.unitPrice ?? p.price);
+        if (looksLikeMinorUnits(unit)) unit = unit / 100; // convert paise->₹
+
+        const qty = Number(it.quantity ?? it.qty ?? 1) || 1;
+        const image = it.image || p.image || p.imageUrl || "";
+
         return {
-          ...it,
-          name: p.name || `Product #${pid}`,
-          image: p.image,
-          unitPrice: unit,
+          key: `${pid ?? idx}-${qty}`,
+          title: it.name || it.title || p.name || `Product #${pid ?? idx}`,
+          image,
           qty,
+          unitPrice: unit,
           subtotal: unit * qty,
         };
       });
 
       const computedTotal = joined.reduce((s, li) => s + li.subtotal, 0);
-      const total = Number(o.total) || computedTotal;
-      return { ...o, items: joined, total };
+      const total = Number(o.total) || parsePriceMajor(o.amount) || computedTotal;
+
+      return {
+        id: o.id ?? o.orderId ?? o.reference,
+        date: o.createdAt ?? o.created_at ?? o.date,
+        status: o.status ?? o.paymentStatus ?? "",
+        items: joined,
+        total,
+      };
     });
   }, [orders, productsById]);
 
-  const money = (n) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(n || 0);
+  // ---- UI ----
+  if (loading) {
+    return (
+      <div className={`orders${dark ? " dark" : ""}`}>
+        <h2>Your Orders</h2>
+        <div className="subhead">Fetching latest orders…</div>
+        <div className="orders-empty">Loading…</div>
+      </div>
+    );
+  }
 
-  if (loading) return <div style={{ padding: 16 }}>Loading orders…</div>;
-  if (!normalized.length) return <div style={{ padding: 16 }}>No orders yet.</div>;
+  if (!normalized.length) {
+    return (
+      <div className={`orders${dark ? " dark" : ""}`}>
+        <h2>Your Orders</h2>
+        <div className="orders-empty">
+          Looks quiet here. When you place an order, it will appear in this timeline.
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: 16 }}>
-      <h2>My Orders</h2>
+    <div className={`orders${dark ? " dark" : ""}`}>
+      <h2>Your Orders</h2>
+      <div className="subhead">
+        <span>
+          {normalized.length} order{normalized.length > 1 ? "s" : ""}
+        </span>
+      </div>
+
       {normalized.map((o) => (
-        <div key={o.id} style={{
-          border: "1px solid rgba(0,0,0,0.1)",
-          borderRadius: 12,
-          padding: 12,
-          marginBottom: 14,
-          background: "white"
-        }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-            <div>
-              <div style={{ fontWeight: 700 }}>Order #{o.id}</div>
-              <div style={{ fontSize: 12, opacity: 0.7 }}>
-                {o.createdAt ? new Date(o.createdAt).toLocaleString() : ""}
+        <article className="order-card" key={o.id}>
+          <header className="order-header">
+            <div className="order-meta">
+              <div className="order-id">Order #{o.id}</div>
+              <div className="order-date">{formatDate(o.date)}</div>
+              <div className="order-status">
+                <span className={`badge ${badgeKind(o.status)}`}>{o.status || ""}</span>
+                <span>• {o.items.length} item{o.items.length > 1 ? "s" : ""}</span>
               </div>
             </div>
-            <div style={{ fontWeight: 700 }}>{money(o.total)}</div>
+            <div className="order-total">{money(o.total)}</div>
+          </header>
+
+          <div className="order-items">
+            {o.items.map((it) => (
+              <div className="order-item" key={it.key}>
+                <div className="item-thumb">
+                  {it.image ? (
+                    <img src={it.image} alt={it.title} onError={(e) => (e.currentTarget.style.display = "none")} />
+                  ) : null}
+                </div>
+                <div className="item-name">
+                  <div className="item-title">{it.title}</div>
+                  <div className="item-qty">Qty: {it.qty}</div>
+                </div>
+                <div className="item-price">{money(it.unitPrice)}</div>
+                <div className="item-subtotal">{money(it.subtotal)}</div>
+              </div>
+            ))}
           </div>
 
-          {o.items.map((it, idx) => (
-            <div key={idx} style={{
-              display: "grid",
-              gridTemplateColumns: "56px 1fr auto auto",
-              gap: 12,
-              alignItems: "center",
-              padding: "8px 0",
-              borderTop: idx === 0 ? "1px solid rgba(0,0,0,0.06)" : "none"
-            }}>
-              <div>
-                {it.image ? (
-                  <img src={it.image} alt={it.name} style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 8 }} />
-                ) : (
-                  <div style={{ width: 56, height: 56, background: "#eee", borderRadius: 8 }} />
-                )}
-              </div>
-              <div>
-                <div style={{ fontWeight: 600 }}>{it.name}</div>
-                <div style={{ fontSize: 12, opacity: 0.7 }}>Qty: {it.qty}</div>
-              </div>
-              <div style={{ textAlign: "right", fontSize: 14 }}>{money(it.unitPrice)}</div>
-              <div style={{ textAlign: "right", fontWeight: 700 }}>{money(it.subtotal)}</div>
-            </div>
-          ))}
-        </div>
+          <footer className="order-summary">
+            <span className="label">Grand total</span>
+            <span className="value">{money(o.total)}</span>
+          </footer>
+        </article>
       ))}
     </div>
   );
