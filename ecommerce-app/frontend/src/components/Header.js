@@ -21,7 +21,7 @@ const Header = ({ currentView, setCurrentView, user, cart, wishlist, handleLogou
           {/* Search */}
           <div className="search">
             <Search className="icon" />
-            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <input type="text" placeholder="Search here..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           </div>
 
           {/* Cart */}
