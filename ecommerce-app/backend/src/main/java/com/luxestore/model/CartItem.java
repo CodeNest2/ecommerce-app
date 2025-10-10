@@ -11,8 +11,17 @@ public class CartItem {
     private Long userId;
     private Long productId;
     private int quantity;
+    private String imageurl;
 
-    // Explicit public no-arg constructor for Jackson and JPA
+    public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+
+	// Explicit public no-arg constructor for Jackson and JPA
     public CartItem() {}
 
     public CartItem(Long userId, Long productId, int quantity) {

@@ -8,16 +8,35 @@ import Orders from "./components/Orders";
 import Wishlist from "./components/Wishlist";
 import Profile from "./components/Profile";
 import "./App.css";
-
+// import slider1 from '../src/assets/images/slider1.webp';
+// import slider2 from '../src/assets/images/slider2.webp';
+// import slider3 from '../src/assets/images/slider3.webp';
+// import slider4 from '../src/assets/images/slider4.webp';
 // ✅ Stripe
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Checkout from "./components/Checkout";
 
+// Import css files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+// import Slider from "react-slick";
 const API = "http://localhost:8081/api";
 const stripePromise = loadStripe("pk_test_YourPublishableKeyHere"); // your publishable key
-
+// const sliders = [
+//   { name: 'slider1', imageUrl: slider1 },
+//   { name: 'slider2', imageUrl: slider2 },
+//   { name: 'slider3', imageUrl: slider3 },
+//   { name: 'slider4', imageUrl: slider4 }
+// ]
 function App() {
+    var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   const [currentView, setCurrentView] = useState("home");
   const [user, setUser] = useState(null); // {id, name, email, address, phone}
   const [cart, setCart] = useState([]); // cart items from backend
@@ -111,9 +130,21 @@ function App() {
       setOrders([]);
     }
   };
-
   return (
     <div className="app-container">
+      {/* <div style={{backgroundColor: '#fff'}}>
+        {(sliders && sliders.length>0) ?
+        <Slider {...settings}>
+          {
+            sliders.map((item, index)=>{
+              <div key={item.imageUrl}>
+                <img src={item.imageUrl} />
+              </div>
+            })
+          }
+        </Slider> : ''
+        }
+      </div> */}
       <Header
         currentView={currentView}
         setCurrentView={setCurrentView}
