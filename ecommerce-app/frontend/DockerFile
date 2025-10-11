@@ -1,15 +1,12 @@
-# /frontend/Dockerfile
 # Stage 1: build
 FROM node:18-alpine AS build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json package-lock.json ./   
- # Add trailing slash
+COPY package.json package-lock.json ./
 COPY public ./public
 COPY src ./src
 
-# Build-time API override: you can pass REACT_APP_API_URL build-arg when building
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=http://localhost:8081/api
 
@@ -20,8 +17,8 @@ RUN npm run build
 FROM nginx:1.25-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
-# your custom nginx config (optional). If not present uses default nginx conf.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# your custom nginx config (optional)
+# COPY nginx.conf /etc/nginx/conf.d/default.conf   <-- comment or remove this line
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
