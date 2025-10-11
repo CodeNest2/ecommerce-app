@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: luxebackend
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      # add DB / other envs here, e.g.:
+      # - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/luxedb
+      # - SPRING_DATASOURCE_USERNAME=...
+    ports:
+      - "8081:8081"   # optional: exposes backend to host
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # build arg to embed backend url into React app (if used)
+        REACT_APP_API_URL: "/api"
+    container_name: luxefrontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"  # expose nginx port (80) to host:3000
+    depends_on:
+      - backend

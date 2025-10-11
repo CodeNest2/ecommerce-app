@@ -1,0 +1,18 @@
+# /backend/Dockerfile
+# Stage 1: build with Maven
+FROM maven:3.9.4-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
+# copy only deps for caching
+RUN mvn -B -f pom.xml dependency:go-offline
+
+COPY src ./src
+RUN mvn -B -f pom.xml clean package -DskipTests
+
+# Stage 2: runtime
+FROM eclipse-temurin:17-jre-jammy
+ARG JAR_FILE=/app/target/*.jar
+COPY --from=build /app/target/*.jar /app/app.jar
+EXPOSE 8081
+ENTRYPOINT ["java","-jar","/app/app.jar"]
