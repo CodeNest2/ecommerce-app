@@ -4,14 +4,14 @@ FROM node:18-alpine AS build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json package-lock.json /app/   
- # Copy to working directory
+COPY package.json package-lock.json ./   
+ # Add trailing slash
 COPY public ./public
 COPY src ./src
 
 # Build-time API override: you can pass REACT_APP_API_URL build-arg when building
 ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=${REACT_APP_API_URL:-/api}
+ENV REACT_APP_API_URL=http://localhost:8081/api
 
 RUN npm ci --silent
 RUN npm run build
