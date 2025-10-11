@@ -3,7 +3,6 @@ package com.luxestore.controller;
 import com.luxestore.model.User;
 import com.luxestore.repository.UserRepository;
 import com.luxestore.security.JwtUtils;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +65,7 @@ public class AuthController {
         }
 
         User user = repo.findByEmail(email)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
         if (!encoder.matches(password, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
@@ -79,13 +78,13 @@ public class AuthController {
         user.setPassword(null);
 
         Map<String, Object> resp = Map.of(
-            "token", token,
-            "user", Map.of(
-                "id", user.getId(),
-                "name", user.getName(),
-                "email", user.getEmail(),
-                "roles", user.getRoles()
-            )
+                "token", token,
+                "user", Map.of(
+                        "id", user.getId(),
+                        "name", user.getName(),
+                        "email", user.getEmail(),
+                        "roles", user.getRoles()
+                )
         );
         return ResponseEntity.ok(resp);
     }
