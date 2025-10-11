@@ -16,8 +16,8 @@
 .nav .active { color: #f0eff1ef; }
 .actions { display: flex; align-items: center; gap: 12px; }
 .search { position: relative; }
-.search input { background-color: antiquewhite;padding: 6px 10px 6px 30px; border: 1px solid antiquewhite; border-radius: 6px;  }
-.search .icon { position: absolute; right: 9px; top: 5px; color: antiquewhite; }
+.search input { padding: 6px 10px 6px 28px; border: 1px solid #ccc; border-radius: 6px; background-color: antiquewhite; }
+.search .icon { position: absolute; right: 8px; top: 6px; color: #888; }
 .cart-btn { position: relative; background: antiquewhite; border: none;  }
 .cart-count { position: absolute; top: -6px; right: -6px; background: antiquewhite; color: rgb(20, 18, 18); font-size: 12px; padding: 2px 6px; border-radius: 50%; }
 .login-btn { background: antiquewhite; color: rgb(20, 18, 18); padding: 6px 12px; border-radius: 6px; font-weight: 600; }
