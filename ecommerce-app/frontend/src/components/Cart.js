@@ -7,6 +7,7 @@ const Cart = ({ user, cart: propCart, reloadCart, setCurrentView }) => {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
+    console.log('propCart', propCart)
     setCart(propCart);
   }, [propCart]);
 
@@ -69,10 +70,10 @@ const Cart = ({ user, cart: propCart, reloadCart, setCurrentView }) => {
         <div>
           {cart.map((item) => (
             <div key={item.id} className="cart-item">
-              <img src={item.product?.image} alt={item.product?.name} />
+              <img src={item?.imageurl} alt={item?.name} />
               <div>
-                <h3>{item.product?.name}</h3>
-                <p>₹{item.product?.price}</p>
+                <h3>{item?.name}</h3>
+                <p>₹{item?.price}</p>
               </div>
               <div className="cart-actions">
                 <button
@@ -94,9 +95,9 @@ const Cart = ({ user, cart: propCart, reloadCart, setCurrentView }) => {
           ))}
 
           {/* ✅ Existing Place Order button */}
-          <button className="placeorder-btn" onClick={placeOrder}>
+          {/* <button className="placeorder-btn" onClick={placeOrder}>
             Place Order
-          </button>
+          </button> */}
 
           {/* ✅ New Checkout button for Stripe */}
           <button

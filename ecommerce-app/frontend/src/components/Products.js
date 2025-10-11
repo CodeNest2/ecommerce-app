@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { Heart } from "lucide-react";
 import "./Products.css";
+import { ToastContainer, toast } from 'react-toastify';
 
 const API = "http://localhost:8081/api";
 
@@ -192,11 +193,13 @@ const Products = ({ user, cart, setCart, wishlist = [], reloadCart, reloadWishli
       await fetchJson(`${API}/cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, productId: product.id, quantity: 1 }),
+        body: JSON.stringify({ imageurl:product.image, userId: user.id, productId: product.id, quantity: 1 }),
       });
       await reloadCart?.();
-      alert("Added to cart");
+      // alert("Added to cart");
+      toast.success("Added to Cart Successfully");
     } catch (err) {
+      toast.error("Failed to add cart"+err.message);
       alert("Failed to add to cart: " + (err.message || err));
     }
   };
@@ -305,7 +308,7 @@ const Products = ({ user, cart, setCart, wishlist = [], reloadCart, reloadWishli
             <p className="price">₹{p.price}</p>
             <div style={{ display: "flex", gap: 8 }}>
               <button className="add-btn" onClick={() => addToCartBackend(p)} style={{ flex: 1 }}>
-                Add to Cart
+                Add to Cart 1
               </button>
               <button
                 className="add-btn"
@@ -410,7 +413,7 @@ const Products = ({ user, cart, setCart, wishlist = [], reloadCart, reloadWishli
                     onClick={() => addToCartBackend(selected)}
                     style={{ flex: 1 }}
                   >
-                    Add to Cart
+                    Add to Cart 2
                   </button>
                   <button
                     className="add-btn"
@@ -443,6 +446,7 @@ const Products = ({ user, cart, setCart, wishlist = [], reloadCart, reloadWishli
           </div>
         </div>
       )}
+      <ToastContainer autoClose={800} />
     </div>
   );
 };

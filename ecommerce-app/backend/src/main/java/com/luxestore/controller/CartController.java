@@ -32,6 +32,7 @@ public class CartController {
     if (!existing.isEmpty()) {
       CartItem e = existing.get(0);
       e.setQuantity(e.getQuantity() + ci.getQuantity());
+      e.setImageurl(e.getImageurl());
       return repo.save(e);
     }
     return repo.save(ci);
