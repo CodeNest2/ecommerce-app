@@ -16,7 +16,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API = process.env.REACT_APP_API_URL;
+const API = "https://luxestore-backend.onrender.com/api";
 const stripePromise = loadStripe("pk_test_YourPublishableKeyHere");
 
 function App() {

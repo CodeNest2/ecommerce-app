@@ -3,7 +3,8 @@ import { Heart } from "lucide-react";
 import { toast } from "react-toastify";
 import "./Products.css";
 
-const API = process.env.REACT_APP_API_URL;
+
+const API = "https://luxestore-backend.onrender.com/api";
 
 const CATEGORY_LABELS = {
   all: "All Categories",

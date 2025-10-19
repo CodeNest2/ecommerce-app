@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Profile.css";
-const API = process.env.REACT_APP_API_URL;
+
+const API = "https://luxestore-backend.onrender.com/api";
 
 const Profile = ({ user, setUser }) => {
   const [edit, setEdit] = useState(false);

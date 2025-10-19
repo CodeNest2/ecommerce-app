@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import "./Wishlist.css";
 
-const API = process.env.REACT_APP_API_URL || "/api";
+
+const API = "https://luxestore-backend.onrender.com/api";
 
 
 const Wishlist = ({

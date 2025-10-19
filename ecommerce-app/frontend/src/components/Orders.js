@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./Orders.css";
 
-const API = process.env.REACT_APP_API_URL;
+
+const API = "https://luxestore-backend.onrender.com/api";
 
 const Orders = ({ orders: propOrders = [], user, setCurrentView, dark = false }) => {
   const [orders, setOrders] = useState(Array.isArray(propOrders) ? propOrders : []);
