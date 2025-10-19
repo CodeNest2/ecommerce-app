@@ -16,7 +16,6 @@ public class UserController {
   public User signup(@RequestBody User user) {
     return repo.save(user);
   }
-
   @PostMapping("/login")
   public User login(@RequestBody User login) {
     Optional<User> found = repo.findByEmail(login.getEmail());

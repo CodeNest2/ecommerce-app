@@ -32,7 +32,7 @@ const Profile = ({ user, setUser }) => {
       ) : (
         <div className="profile-edit">
           <input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Full Name" />
-          <input value={form.address} onChange={e=>setForm({...form,address:e.target.value})} placeholder="Address" />
+          <input value={form.address} onChange={e=>setForm({...form,address:e.target.value})} placeholder=" Address" />
           <input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="Phone Number" />
           <button onClick={saveChanges}>Save</button>
           <button className="cancel" onClick={()=>setEdit(false)}>Cancel</button>
