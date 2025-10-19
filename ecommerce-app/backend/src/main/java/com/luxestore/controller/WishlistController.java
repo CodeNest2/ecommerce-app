@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/wishlist")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*") // allow all origins for simplicity for testing @CrossOrigin(origins = "https://luxestore-frontend.onrender.com")
 public class WishlistController {
 	private final WishlistRepository repo;
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*") // allow all origins for simplicity for testing @CrossOrigin(origins = "https://luxestore-frontend.onrender.com")
 public class UserController {
   private final UserRepository repo;
   public UserController(UserRepository repo) { this.repo = repo; }

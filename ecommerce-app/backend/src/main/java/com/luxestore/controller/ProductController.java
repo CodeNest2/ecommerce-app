@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*") // allow all origins for simplicity for testing @CrossOrigin(origins = "https://luxestore-frontend.onrender.com")
 public class ProductController {
   private final ProductRepository repo;
   public ProductController(ProductRepository repo) { this.repo = repo; }

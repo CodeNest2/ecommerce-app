@@ -11,7 +11,7 @@ import com.luxestore.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/api/cart")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*") // allow all origins for simplicity for testing @CrossOrigin(origins = "https://luxestore-frontend.onrender.com")
 public class CartController {
   private final CartRepository repo;
   private final ProductRepository productRepo;
