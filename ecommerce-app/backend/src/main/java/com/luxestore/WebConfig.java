@@ -8,7 +8,8 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-      .allowedOrigins("*")   // your React URL (or "*" for dev)
+      .allowedOrigins( "http://localhost:3000",
+            "https://luxestore-frontend.onrender.com" )   // your React URL (or "*" for dev)
       .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
       .allowedHeaders("*")
       .allowCredentials(true)

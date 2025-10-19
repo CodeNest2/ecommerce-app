@@ -2,6 +2,7 @@ package com.luxestore.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/signup"),
                                  new AntPathRequestMatcher("/api/auth/login")).permitAll()
                 //.requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
@@ -40,8 +42,8 @@ public class SecurityConfig {
 
                 .anyRequest().authenticated()
             )
-            .headers(headers -> headers.frameOptions().disable())
-            .httpBasic();
+           .headers(headers -> headers.frameOptions().disable())
+            ;
         return http.build();
     }
 }
