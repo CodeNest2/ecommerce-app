@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Profile.css";
-const API = "http://localhost:8081/api";
+const API = process.env.REACT_APP_API_URL;
 
 const Profile = ({ user, setUser }) => {
   const [edit, setEdit] = useState(false);

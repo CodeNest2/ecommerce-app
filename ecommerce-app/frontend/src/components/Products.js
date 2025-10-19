@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 import { toast } from "react-toastify";
 import "./Products.css";
 
-const API = "http://localhost:8081/api";
+const API = process.env.REACT_APP_API_URL;
 
 const CATEGORY_LABELS = {
   all: "All Categories",

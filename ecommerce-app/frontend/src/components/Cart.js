@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Plus, Minus, X } from "lucide-react";
 import "./Cart.css";
 
-const API = "http://localhost:8081/api";
+const API = REACT_APP_API_URL;
 
 const Cart = ({ user, cart: propCart, reloadCart, setCurrentView }) => {
   const [cart, setCart] = useState([]);

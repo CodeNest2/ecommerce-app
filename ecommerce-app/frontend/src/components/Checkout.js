@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./Checkout.css";
 
-const API = "http://localhost:8081/api";
+const API = process.env.REACT_APP_API_URL;
 
 const Checkout = ({ user, cart = [], setCurrentView, reloadCart, reloadOrders }) => {
   const stripe = useStripe();

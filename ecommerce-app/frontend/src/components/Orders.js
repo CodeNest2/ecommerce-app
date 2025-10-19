@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./Orders.css";
 
-const API = "http://localhost:8081/api";
+const API = process.env.REACT_APP_API_URL;
 
 const Orders = ({ orders: propOrders = [], user, setCurrentView, dark = false }) => {
   const [orders, setOrders] = useState(Array.isArray(propOrders) ? propOrders : []);
