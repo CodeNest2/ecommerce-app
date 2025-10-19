@@ -8,7 +8,7 @@ COPY public ./public
 COPY src ./src
 
 ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=http://localhost:8081/api
+ENV REACT_APP_API_URL=https://luxestore-backend.onrender.com/api
 
 RUN npm ci --silent
 RUN npm run build
