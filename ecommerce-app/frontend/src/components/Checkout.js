@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./Checkout.css";
 
-const API = "https://luxestore-backend.onrender.com/api";
+const API = "http://localhost:8081/api";
 
 const Checkout = ({ user, cart = [], setCurrentView, reloadCart, reloadOrders }) => {
   const stripe = useStripe();

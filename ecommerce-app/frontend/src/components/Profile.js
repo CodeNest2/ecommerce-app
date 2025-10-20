@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Profile.css";
-
-const API = "https://luxestore-backend.onrender.com/api";
+const API = "http://localhost:8081/api";
 
 const Profile = ({ user, setUser }) => {
   const [edit, setEdit] = useState(false);
@@ -32,7 +31,7 @@ const Profile = ({ user, setUser }) => {
       ) : (
         <div className="profile-edit">
           <input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Full Name" />
-          <input value={form.address} onChange={e=>setForm({...form,address:e.target.value})} placeholder=" Address" />
+          <input value={form.address} onChange={e=>setForm({...form,address:e.target.value})} placeholder="Address" />
           <input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="Phone Number" />
           <button onClick={saveChanges}>Save</button>
           <button className="cancel" onClick={()=>setEdit(false)}>Cancel</button>
