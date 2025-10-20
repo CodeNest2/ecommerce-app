@@ -51,27 +51,13 @@ public class SecurityConfig {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
+           // temporary: permit everything under /api/** so we can isolate the problem
+        .authorizeHttpRequests(auth -> auth
+        .requestMatchers(new AntPathRequestMatcher("/**", HttpMethod.OPTIONS.name())).permitAll()
+        .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
+        .anyRequest().authenticated()
+    )
 
-                // Explicit AntPathRequestMatcher for OPTIONS (preflight)
-                .requestMatchers(new AntPathRequestMatcher("/**", HttpMethod.OPTIONS.name())).permitAll()
-
-                // Auth endpoints
-                .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
-
-                // Public data endpoints
-                .requestMatchers(new AntPathRequestMatcher("/api/products/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/cart/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/wishlist/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/orders/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/payment/**")).permitAll()
-
-                // H2 console
-                .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-
-                // everything else requires authentication
-                .anyRequest().authenticated()
-            )
             // allow frames for H2 console
             .headers(headers -> headers.frameOptions().disable());
 
